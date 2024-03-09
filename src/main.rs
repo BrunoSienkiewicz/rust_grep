@@ -1,11 +1,16 @@
+use ::rust_grep::run;
+use rust_grep::Config;
+
 use std::env;
+use std::process;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    let query = &args[1];
-    let file_path = &args[2];
+    let config = Config::build(&args).unwrap_or_else(|err| {
+        println!("Problem parsing arguments: {err}");
+        process::exit(1);
+    });
 
-    dbg!(query);
-    dbg!(file_path);
+    run(config);
 }
