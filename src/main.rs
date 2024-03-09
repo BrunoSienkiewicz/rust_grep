@@ -1,4 +1,4 @@
-use ::rust_grep::run;
+use rust_grep::run;
 use rust_grep::Config;
 
 use std::env;
@@ -12,5 +12,8 @@ fn main() {
         process::exit(1);
     });
 
-    run(config);
+    if let Err(e) = run(config) {
+        print!("Application error: {e}");
+        process::exit(1);
+    };
 }
