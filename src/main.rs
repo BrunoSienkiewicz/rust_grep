@@ -1,5 +1,5 @@
-use rust_grep::run;
-use rust_grep::Config;
+use rust_grep::config::config::Config;
+use rust_grep::search::search_builder::SearchBuilder;
 
 use std::env;
 use std::process;
@@ -10,7 +10,14 @@ fn main() {
         process::exit(1);
     });
 
-    if let Err(e) = run(config) {
+    let mut builder = SearchBuilder::new(config);
+
+    if let Err(e) = builder.build() {
+        print!("Application error: {e}");
+        process::exit(1);
+    };
+
+    if let Err(e) = builder::run() {
         print!("Application error: {e}");
         process::exit(1);
     };
